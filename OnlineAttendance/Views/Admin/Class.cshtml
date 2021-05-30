@@ -4,23 +4,49 @@
     ViewBag.Title = "Class";
     Layout = "~/Views/Shared/_LayoutPage2.cshtml";
 }
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="container-fluid">
     <h1></h1>
 </div>
 <div class="container-fluid">
     <a class="btn btn-outline-primary btn-lg">Home</a>
-    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Faculty">Add Class</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddClass">Add Class</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Faculty">Add Faculty</a>
     <a class="btn float-lg-end btn-outline-danger btn-lg">Logout</a>
 </div>
 <div class="container-fluid">
     <h1></h1>
 </div>
-<div class="container-fluid">
-    @foreach (var cls in Model.zclasses)
-    {
-        <a class="btn btn-outline-primary btn-lg">@cls.classname</a>
-    }
+<div class="col-md-12 p-1">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title text-center">Classes</h3>
+        </div>
+        <div class="card-body" style="min-height:550px;">
+            <div class="col-md-12">
+            </div>
+            <div class="col-md-12 " style="overflow:auto;">
+                <table class="table table-bordered">
+                    <tr class="thead-m-dark">
+                        <th><center>Class ID</center></th>
+                        <th><center>Class ID</center></th>
+                        <th colspan="2"><center>Action</center></th>
+                    </tr>
+                    @foreach (var cls in Model.zclasses)
+                    {
+                        <tr>
+                            <td><center>@cls.cid</center></td>
+                            <td><center>@cls.classname</center></td>
+                            <td><center><a class="btn-danger btn btn-xs" href="~/Admin/Delete/@cls.cid"><span class="glyphicon glyphicon-trash"></span>&nbsp; Delete</a></center></td>
+                            <td><center><a class="btn-info btn btn-xs" href="~/Admin/EditClass/@cls.cid"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit</a></center></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 @if (TempData["notification"] != null)
 {

@@ -28,6 +28,7 @@ namespace OnlineAttendance.Controllers
                     {
                         if(lg.type == "AD")
                         {
+                            Session["AdminStart"] = "SessionOn";
                             TempData["notification"] = "swal('','Login Success','success');";
                             return RedirectToAction("../Admin/Index");
                         }
