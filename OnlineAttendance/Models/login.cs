@@ -15,9 +15,6 @@ namespace OnlineAttendance.Models
     public partial class login
     {
         public int id { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string mobile { get; set; }
         public string username { get; set; }
         public string type { get; set; }
         public string password { get; set; }

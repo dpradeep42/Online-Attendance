@@ -17,7 +17,17 @@ namespace OnlineAttendance.Controllers
         }
         public ActionResult Faculty()
         {
-            return View();
+            try
+            {
+                faculty f = new faculty();
+                f.faculties = db.faculties.ToList();
+                return View(f);
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Index");
+            }
         }
         [AdminCheck]
         public ActionResult Class()
@@ -91,7 +101,7 @@ namespace OnlineAttendance.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Class");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TempData["notification"] = "swal('','Something Went Wrong','warning');";
                 return RedirectToAction("Class");
@@ -100,6 +110,61 @@ namespace OnlineAttendance.Controllers
         public ActionResult AddFaculty()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult AddFaculty(faculty fa)
+        {
+            try
+            {
+                db.faculties.Add(fa);
+                db.SaveChanges();
+                login l = new login
+                {
+                    username = fa.username,
+                    password = fa.password,
+                    type = fa.type,
+                };
+                db.logins.Add(l);
+                db.SaveChanges();
+                return RedirectToAction("Faculty");
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Faculty");
+            }
+        }
+        public ActionResult DeleteFaculty(long id)
+        {
+            try
+            {
+                faculty fa = db.faculties.Where(temp => temp.fid == id).FirstOrDefault();
+                login lo = db.logins.Where(l => l.username == fa.username).FirstOrDefault();
+                db.logins.Remove(lo);
+                db.faculties.Remove(fa);
+                db.SaveChanges();
+
+                return RedirectToAction("Faculty");
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Faculty");
+            }
+        }
+        public JsonResult CheckUsernameAvailability(string userdata)
+        {
+            //System.Threading.Thread.Sleep(200);
+            var SeachData = db.logins.Where(x => x.username == userdata).FirstOrDefault();
+            if (SeachData != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+
         }
     }
 }

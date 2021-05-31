@@ -13,7 +13,7 @@
 <div class="container-fluid">
     <a class="btn btn-outline-primary btn-lg">Home</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddClass">Add Class</a>
-    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Faculty">Add Faculty</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddFaculty">Add Faculty</a>
     <a class="btn float-lg-end btn-outline-danger btn-lg">Logout</a>
 </div>
 <div class="container-fluid">
@@ -31,7 +31,7 @@
                 <table class="table table-bordered">
                     <tr class="thead-m-dark">
                         <th><center>Class ID</center></th>
-                        <th><center>Class ID</center></th>
+                        <th><center>Class Name</center></th>
                         <th colspan="2"><center>Action</center></th>
                     </tr>
                     @foreach (var cls in Model.zclasses)

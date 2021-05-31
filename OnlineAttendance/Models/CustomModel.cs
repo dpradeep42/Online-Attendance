@@ -9,4 +9,9 @@ namespace OnlineAttendance.Models
     {
         public List<zclass> zclasses { get; set; }
     }
+    public partial class faculty
+    {
+        public List<faculty> faculties { get; set; }
+        public String type { get; set; }
+    }
 }

@@ -5,5 +5,61 @@
     Layout = "~/Views/Shared/_LayoutPage2.cshtml";
 }
 
-<h2>Faculty</h2>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+    <h1></h1>
+</div>
+<div class="container-fluid">
+    <a class="btn btn-outline-primary btn-lg">Home</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddClass">Add Class</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddFaculty">Add Faculty</a>
+    <a class="btn float-lg-end btn-outline-danger btn-lg">Logout</a>
+</div>
+<div class="container-fluid">
+    <h1></h1>
+</div>
+<div class="col-md-12 p-1">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title text-center">Faculties</h3>
+        </div>
+        <div class="card-body" style="min-height:550px;">
+            <div class="col-md-12">
+            </div>
+            <div class="col-md-12 " style="overflow:auto;">
+                <table class="table table-bordered">
+                    <tr class="thead-m-dark">
+                        <th><center>Faculty ID</center></th>
+                        <th><center>Faculty Name</center></th>
+                        <th><center>Gender</center></th>
+                        <th><center>Mobile</center></th>
+                        <th><center>Username</center></th>
+                        <th><center>Password</center></th>
+                        <th colspan="2"><center>Action</center></th>
+                    </tr>
+                    @foreach (var fac in Model.faculties)
+                    {
+                <tr>
+                    <td><center>@fac.fid</center></td>
+                    <td><center>@fac.name</center></td>
+                    <td><center>@fac.gender</center></td>
+                    <td><center><a class="btn-info btn btn-xs" href="tel:@fac.mobile"><span class="glyphicon glyphicon-earphone"></span>&nbsp; call</a></center></td>
+                    <td><center>@fac.username</center></td>
+                    <td><center>@fac.password</center></td>
+                    <td><center><a class="btn-danger btn btn-xs" href="~/Admin/DeleteFaculty/@fac.fid"><span class="glyphicon glyphicon-trash"></span>&nbsp; Delete</a></center></td>
+                    <td><center><a class="btn-info btn btn-xs" href="~/Admin/EditFaculty/@fac.fid"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit</a></center></td>
+                </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["notification"] != null)
+{
+    <script type="text/javascript">
+         window.onload = function () {@Html.Raw(TempData["notification"].ToString());};
+    </script>
+}
