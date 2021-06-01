@@ -274,6 +274,11 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\Attendance1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attendance.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomModel.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -294,11 +299,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Attendance.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Attendance1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Attendance.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\faculty.cs">
       <DependentUpon>Attendance.tt</DependentUpon>
@@ -326,6 +326,12 @@
     <Content Include="Views\Admin\AddClass.cshtml" />
     <Content Include="Views\Admin\AddFaculty.cshtml" />
     <Content Include="Views\Admin\EditClass.cshtml" />
+    <Content Include="Views\Admin\EditFaculty.cshtml" />
+    <Content Include="Views\Admin\Student.cshtml" />
+    <Content Include="Views\Admin\AddStudent.cshtml" />
+    <Content Include="Views\Faculty\Index.cshtml" />
+    <Content Include="Views\Faculty\ViewClass.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -335,9 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Faculty\" />
     <Folder Include="Views\SessionCheck\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

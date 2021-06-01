@@ -11,10 +11,12 @@ namespace OnlineAttendance.Controllers
     {
         private readonly AttendanceEntities2 db = new AttendanceEntities2();
         // GET: Admin
+        [AdminCheck]
         public ActionResult Index()
         {
             return View();
         }
+        [AdminCheck]
         public ActionResult Faculty()
         {
             try
@@ -44,10 +46,12 @@ namespace OnlineAttendance.Controllers
                 return RedirectToAction("Index");
             }
         }
+        [AdminCheck]
         public ActionResult AddClass()
         {
             return View();
         }
+        [AdminCheck]
         [HttpPost]
         public ActionResult AddClass(zclass zcl)
         {
@@ -63,6 +67,7 @@ namespace OnlineAttendance.Controllers
                 return RedirectToAction("Class");
             }
         }
+        [AdminCheck]
         public ActionResult EditClass(int id)
         {
             try
@@ -76,6 +81,7 @@ namespace OnlineAttendance.Controllers
                 return View("Class");
             }
         }
+        [AdminCheck]
         [HttpPost]
         public ActionResult EditClass(zclass zcl)
         {
@@ -92,6 +98,7 @@ namespace OnlineAttendance.Controllers
                 return View("Class");
             }
         }
+        [AdminCheck]
         public ActionResult Delete(long id)
         {
             try
@@ -107,10 +114,12 @@ namespace OnlineAttendance.Controllers
                 return RedirectToAction("Class");
             }
         }
+        [AdminCheck]
         public ActionResult AddFaculty()
         {
             return View();
         }
+        [AdminCheck]
         [HttpPost]
         public ActionResult AddFaculty(faculty fa)
         {
@@ -126,6 +135,14 @@ namespace OnlineAttendance.Controllers
                 };
                 db.logins.Add(l);
                 db.SaveChanges();
+
+                GMailer mailer = new GMailer();
+                mailer.ToEmail = fa.email;
+                mailer.Subject = "Account Created Successfully";
+                mailer.Body = $"Dear Sir/Ma'am, Your Account created successfully!. Your credentials:. Username : {fa.username} Password:{fa.password}";
+                mailer.IsHtml = false;
+                mailer.Send();
+
                 return RedirectToAction("Faculty");
             }
             catch (Exception e)
@@ -134,6 +151,62 @@ namespace OnlineAttendance.Controllers
                 return RedirectToAction("Faculty");
             }
         }
+        [AdminCheck]
+        public ActionResult EditFaculty(int id)
+        {
+            try
+            {
+                faculty existingFaculty = db.faculties.Where(temp => temp.fid == id).FirstOrDefault();
+                login l = db.logins.Where(ltemp => ltemp.username == existingFaculty.username).FirstOrDefault();
+                db.logins.Remove(l);
+                db.SaveChanges();
+                return View(existingFaculty);
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return View("Faculty");
+            }
+        }
+        [AdminCheck]
+        [HttpPost]
+        public ActionResult EditFaculty(faculty fac)
+        {
+            try
+            {
+                faculty f = db.faculties.Where(temp => temp.fid == fac.fid).FirstOrDefault();
+                f.name = fac.name;
+                f.gender = fac.gender;
+                f.mobile = fac.mobile;
+                f.email = fac.email;
+                f.username = fac.username;
+                f.password = fac.password;
+                f.subject = fac.subject;
+                login l = new login
+                {
+                    username = fac.username,
+                    password = fac.password,
+                    type = fac.type,
+                };
+                db.logins.Add(l);
+                db.SaveChanges();
+
+                GMailer mailer = new GMailer();
+                mailer.ToEmail = f.email;
+                mailer.Subject = "Account Updated Successfully";
+                mailer.Body = $"Dear Sir/Ma'am, Your Account updated successfully!. Your new credentials:. Username : {f.username} Password:{f.password}";
+                mailer.IsHtml = false;
+                mailer.Send();
+
+                return RedirectToAction("Faculty");
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return View("Faculty");
+            }
+        }
+        [AdminCheck]
         public ActionResult DeleteFaculty(long id)
         {
             try
@@ -152,6 +225,88 @@ namespace OnlineAttendance.Controllers
                 return RedirectToAction("Faculty");
             }
         }
+        [AdminCheck]
+        public ActionResult Student()
+        {
+            try
+            {
+                student s = new student();
+                s.students = db.students.ToList();
+                return View(s);
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Index");
+            }
+        }
+        [AdminCheck]
+        public ActionResult AddStudent()
+        {
+            try
+            {
+                student std = new student();
+                std.zclasses = db.zclasses.ToList();
+                return View(std);
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Student");
+            }
+        }
+        [AdminCheck]
+        [HttpPost]
+        public ActionResult AddStudent(student st)
+        {
+            try
+            {
+                db.students.Add(st);
+                db.SaveChanges();
+                login l = new login
+                {
+                    username = st.username,
+                    password = st.password,
+                    type = st.type,
+                };
+                db.logins.Add(l);
+                db.SaveChanges();
+
+                GMailer mailer = new GMailer();
+                mailer.ToEmail = st.email;
+                mailer.Subject = "Account Created Successfully";
+                mailer.Body = $"Dear Sir/Ma'am, Your child's Account created successfully!. Your credentials:. Username : {st.username} Password:{st.password}";
+                mailer.IsHtml = false;
+                mailer.Send();
+
+                return RedirectToAction("Student");
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Student");
+            }
+        }
+        [AdminCheck]
+        public ActionResult DeleteStudent(long id)
+        {
+            try
+            {
+                student st = db.students.Where(temp => temp.sid == id).FirstOrDefault();
+                login lo = db.logins.Where(l => l.username == st.username).FirstOrDefault();
+                db.logins.Remove(lo);
+                db.students.Remove(st);
+                db.SaveChanges();
+
+                return RedirectToAction("Student");
+            }
+            catch (Exception e)
+            {
+                TempData["notification"] = "swal('','Something Went Wrong','warning');";
+                return RedirectToAction("Student");
+            }
+        }
+        [AdminCheck]
         public JsonResult CheckUsernameAvailability(string userdata)
         {
             //System.Threading.Thread.Sleep(200);
@@ -165,6 +320,11 @@ namespace OnlineAttendance.Controllers
                 return Json(0);
             }
 
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model OnlineAttendance.Models.zclass
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+    <h1></h1>
+    
+</div>
+<div class="container-fluid">
+    <a class="btn float-lg-end btn-outline-danger btn-lg" href="~/Admin/Logout">Logout</a>
+    @foreach (var clss in Model.zclasses)
+    {
+        <a class="btn btn-outline-primary btn-lg" href="~/Faculty/ViewClass/@clss.cid">@clss.classname</a>
+    }
+</div>

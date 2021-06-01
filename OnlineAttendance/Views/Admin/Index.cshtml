@@ -7,10 +7,11 @@
     <h1></h1>
 </div>
 <div class="container-fluid">
-    <a class="btn btn-outline-primary btn-lg">Home</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Index">Home</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/Faculty">Manage Faculty</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/Class">Manage Classes</a>
-    <a class="btn float-lg-end btn-outline-danger btn-lg">Logout</a>
+    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Student">Manage Students</a>
+    <a class="btn float-lg-end btn-outline-danger btn-lg" href="~/Admin/Logout">Logout</a>
 </div>
 @if (TempData["notification"] != null)
 {

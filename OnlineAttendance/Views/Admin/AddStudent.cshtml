@@ -1,0 +1,91 @@
+﻿@model OnlineAttendance.Models.student
+
+@{
+    ViewBag.Title = "AddStudent";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<div class="col-md-12 zero-pad-mob">
+    <form action="~/Admin/AddStudent" method="post">
+        <div class="col-md-12 p-1">
+            <div class="card card-succses forcardpadding">
+                <div class="card-header">
+                    <h3 class="card-title">Add Student</h3>
+                </div>
+                <div class="card-body" style="min-height:550px;">
+                    <div class="col-md-12 row p-0 forcardpadding">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="col-md-12">Class</label>
+                                <div class="col-md-12">
+                                    <select class="select2 form-control" name="classname" id="Dist" required>
+                                        <option disabled selected value=""> -- Select Class  -- </option>
+                                        @foreach (var clss in Model.zclasses)
+                                        {
+                                            <option value="@clss.classname">@clss.classname</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <label class="col-md-12">Name of the Student</label>
+                            <div class="col-md-12">
+                                <input class="form-control from-group-sm" type="text" name="name" id="name" maxlength="50" required />
+                            </div>
+                            <label class="col-md-12">Parent's Mobile Number</label>
+                            <div class="col-md-12">
+                                <input class="form-control from-group-sm" type="number" name="mobile" id="mobile" maxlength="50" required />
+                            </div>
+                            <label class="col-md-12">Parent's Email ID</label>
+                            <div class="col-md-12">
+                                <input class="form-control from-group-sm" type="email" name="email" id="email" maxlength="50" required />
+                            </div>
+                            <label class="col-md-12">Username</label>
+                            <div class="col-md-12">
+                                <input autocomplete="off" class="form-control from-group-sm" type="text" name="username" id="DynamicUsername" onchange="UserCheck()" maxlength="50" required />
+                                <p id="Status" />
+                            </div>
+                            <label class="col-md-12">Password</label>
+                            <div class="col-md-12">
+                                <input autocomplete="off" class="form-control from-group-sm" type="password" name="password" id="password" maxlength="50" required />
+                            </div>
+                            <label class="col-md-12">Gender</label>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <input type="radio" name="gender" value="Male" />Male
+                                    <input type="radio" name="gender" value="Male" />Female
+                                </div>
+                            </div>
+                            <input type="hidden" name="type" value="ST" />
+                            <div class="col-md-12 text-center forbutton" style="padding-top:15px;">
+                                <button id="btnSave" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function UserCheck() {
+        $("#Status").html("Checking...");
+        $.post("@Url.Action("CheckUsernameAvailability", "Admin")",
+            {
+                userdata: $("#DynamicUsername").val()
+            },
+        function (data) {
+            if (data == 0) {
+                $("#Status").html('<font color="Green">Available !. you can take it.</font>');
+                $("#DynamicUsername").css("border-color", "Green");
+                $('#btnSave').prop('disabled', false);
+
+            }
+            else {
+                $("#Status").html('<font color="Red">That name is taken.Try Another.</font>');
+                $("#DynamicUsername").css("border-color", "Red");
+                $('#btnSave').prop('disabled', true);
+            }
+        });
+    }
+</script>

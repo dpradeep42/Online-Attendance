@@ -34,6 +34,10 @@ namespace OnlineAttendance.Controllers
                         }
                         if (lg.type == "FA")
                         {
+                            Session["FacultyStart"] = "SessionOn";
+                            faculty f = db.faculties.Where(temp => temp.username == lg.username).FirstOrDefault();
+                            Session["fid"] = f.fid;
+
                             TempData["notification"] = "swal('','Login Success','success');";
                             return RedirectToAction("../Faculty/Index");
                         }

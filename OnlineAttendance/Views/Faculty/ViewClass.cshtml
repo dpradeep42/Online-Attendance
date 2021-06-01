@@ -1,7 +1,7 @@
-﻿@model OnlineAttendance.Models.faculty
+﻿@model OnlineAttendance.Models.student
 
 @{
-    ViewBag.Title = "Faculty";
+    ViewBag.Title = "ViewClass";
     Layout = "~/Views/Shared/_LayoutPage2.cshtml";
 }
 
@@ -12,19 +12,16 @@
     <h1></h1>
 </div>
 <div class="container-fluid">
-    <a class="btn btn-outline-primary btn-lg" href="~/Admin/Index">Home</a>
+    <a class="btn btn-outline-primary btn-lg">Home</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddClass">Add Class</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddFaculty">Add Faculty</a>
     <a class="btn btn-outline-primary btn-lg" href="~/Admin/AddStudent">Add Student</a>
     <a class="btn float-lg-end btn-outline-danger btn-lg" href="~/Admin/Logout">Logout</a>
 </div>
-<div class="container-fluid">
-    <h1></h1>
-</div>
 <div class="col-md-12 p-1">
     <div class="card card-success">
         <div class="card-header">
-            <h3 class="card-title text-center">Faculties</h3>
+            <h3 class="card-title text-center">Students</h3>
         </div>
         <div class="card-body" style="min-height:550px;">
             <div class="col-md-12">
@@ -32,26 +29,30 @@
             <div class="col-md-12 " style="overflow:auto;">
                 <table class="table table-bordered">
                     <tr class="thead-m-dark">
-                        <th><center>Faculty ID</center></th>
-                        <th><center>Faculty Name</center></th>
+                        <th><center>Student ID</center></th>
+                        <th><center>Class</center></th>
+                        <th><center>Student Name</center></th>
                         <th><center>Gender</center></th>
-                        <th><center>Mobile</center></th>
+                        <th><center>Parent's Mobile</center></th>
+                        <th><center>Parent's Email</center></th>
                         <th><center>Username</center></th>
                         <th><center>Password</center></th>
                         <th colspan="2"><center>Action</center></th>
                     </tr>
-                    @foreach (var fac in Model.faculties)
+                    @foreach (var std in Model.students)
                     {
-                <tr>
-                    <td><center>@fac.fid</center></td>
-                    <td><center>@fac.name</center></td>
-                    <td><center>@fac.gender</center></td>
-                    <td><center><a class="btn-info btn btn-xs" href="tel:@fac.mobile"><span class="glyphicon glyphicon-earphone"></span>&nbsp; call</a></center></td>
-                    <td><center>@fac.username</center></td>
-                    <td><center>@fac.password</center></td>
-                    <td><center><a class="btn-danger btn btn-xs" href="~/Admin/DeleteFaculty/@fac.fid"><span class="glyphicon glyphicon-trash"></span>&nbsp; Delete</a></center></td>
-                    <td><center><a class="btn-info btn btn-xs" href="~/Admin/EditFaculty/@fac.fid"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit</a></center></td>
-                </tr>
+                        <tr>
+                            <td><center>@std.sid</center></td>
+                            <td><center>@std.classname</center></td>
+                            <td><center>@std.name</center></td>
+                            <td><center>@std.gender</center></td>
+                            <td><center><a class="btn-info btn btn-xs" href="tel:@std.mobile"><span class="glyphicon glyphicon-earphone"></span>&nbsp; call</a></center></td>
+                            <td><center>@std.email</center></td>
+                            <td><center>@std.username</center></td>
+                            <td><center>@std.password</center></td>
+                            <td><center><a class="btn-danger btn btn-xs" href="~/Faculty/Absent/@std.sid"><span class="glyphicon glyphicon-remove"></span>&nbsp; Absent</a></center></td>
+                            <td><center><a class="btn-success btn btn-xs" href="~/Faculty/Present/@std.sid"><span class="glyphicon glyphicon-ok"></span>&nbsp; Present</a></center></td>
+                        </tr>
                     }
                 </table>
             </div>

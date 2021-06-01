@@ -31,8 +31,33 @@ namespace OnlineAttendance.Controllers
                                 { "Action", "Index" }
                             });
                 }
-
-
+            }
+        }
+    }
+    public class FacultyCheck : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpSessionStateBase session = filterContext.HttpContext.Session;
+            if (session["FacultyStart"] == null)
+            {
+                if (filterContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    //string errormsg = "NOT found";
+                    filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary {
+                                { "Controller", "Faculty" },
+                                { "Action", "Index" }
+                            });
+                }
+                else
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary {
+                                { "Controller", "Faculty" },
+                                { "Action", "Index" }
+                            });
+                }
             }
         }
     }

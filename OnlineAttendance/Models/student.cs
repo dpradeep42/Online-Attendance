@@ -15,6 +15,7 @@ namespace OnlineAttendance.Models
     public partial class student
     {
         public int sid { get; set; }
+        public string classname { get; set; }
         public string name { get; set; }
         public string gender { get; set; }
         public string mobile { get; set; }
