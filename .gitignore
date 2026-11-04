@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local secrets. Copy the *.example files and fill them in. Never commit real credentials.
+# bin/, obj/, packages/ and .vs/ are already ignored above.
+**/*.secrets.config
+!**/*.secrets.config.example
